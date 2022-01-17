@@ -33,4 +33,6 @@ public class MovieServiceImpl implements IMovieService {
     public void remove(Long id) {
         iMovieRepository.deleteById(id);
     }
+
+
 }

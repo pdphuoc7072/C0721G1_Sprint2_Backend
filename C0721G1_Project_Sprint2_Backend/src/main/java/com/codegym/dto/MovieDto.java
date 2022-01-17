@@ -1,50 +1,40 @@
-package com.codegym.model;
+package com.codegym.dto;
 
+import com.codegym.model.Category;
+import com.codegym.model.Movie;
+import com.codegym.model.Schedule;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
-@Entity
-public class Movie {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class MovieDto implements Validator {
     private Long id;
     private String image;
     private String name;
-    @Column(columnDefinition = "date")
+    @Pattern(regexp = "\\d{4}[-]((([0]{1})([1-9]{1}))|(([1]{1})([0-2]{1})))[-]((([0]{1})([1-9]{1}))|(([1-2]{1})([0-9]{1}))|(([3]{1})([0-1]{1})))",
+            message = "Please enter the correct format for start date 'DD/MM/YYYY'")
     private String startDate;
-    @Column(columnDefinition = "date")
+    @Pattern(regexp = "\\d{4}[-]((([0]{1})([1-9]{1}))|(([1]{1})([0-2]{1})))[-]((([0]{1})([1-9]{1}))|(([1-2]{1})([0-9]{1}))|(([3]{1})([0-1]{1})))",
+            message = "Please enter the correct format for end date 'DD/MM/YYYY'")
     private String endDate;
-
     private String actor;
-
     private String studio;
-
     private String duration;
-
     private String director;
-
     private String version;
-
     @Column(columnDefinition = "TEXT")
     private String content;
-
     private String trailer;
-
     private String hall;
-
-
-    @JsonBackReference(value = "movie_category_back_class")
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "movie_category", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categories;
-
-    @JsonBackReference(value = "movie_schedule_back_class")
-    @OneToMany(mappedBy = "movie")
     private List<Schedule> schedules;
+    private List<Movie> movieList;
 
-    public Movie() {
+    public MovieDto() {
     }
 
     public Long getId() {
@@ -151,7 +141,6 @@ public class Movie {
         this.hall = hall;
     }
 
-
     public List<Category> getCategories() {
         return categories;
     }
@@ -168,4 +157,21 @@ public class Movie {
         this.schedules = schedules;
     }
 
+    public List<Movie> getMovieList() {
+        return movieList;
+    }
+
+    public void setMovieList(List<Movie> movieList) {
+        this.movieList = movieList;
+    }
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+
+    }
 }

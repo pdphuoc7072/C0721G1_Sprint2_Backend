@@ -13,22 +13,18 @@ import java.util.Optional;
 public class DayShowServiceImpl implements IDayShowService {
     @Autowired
     private IDayShowRepository iDayShowRepository;
-
     @Override
     public List<DayShow> findAll() {
         return iDayShowRepository.findAll();
     }
-
     @Override
     public Optional<DayShow> findById(Long id) {
         return iDayShowRepository.findById(id);
     }
-
     @Override
     public void save(DayShow dayShow) {
         iDayShowRepository.save(dayShow);
     }
-
     @Override
     public void remove(Long id) {
         iDayShowRepository.deleteById(id);
