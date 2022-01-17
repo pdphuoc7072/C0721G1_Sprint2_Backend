@@ -1,9 +1,12 @@
 package com.codegym.service.impl;
 
+
 import com.codegym.model.Movie;
 import com.codegym.repository.IMovieRepository;
 import com.codegym.service.IMovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,4 +36,15 @@ public class MovieServiceImpl implements IMovieService {
     public void remove(Long id) {
         iMovieRepository.deleteById(id);
     }
+
+    @Override
+    public Page<Movie> findUpComingMovies(Pageable pageable) {
+        return iMovieRepository.findUpComingMovies(pageable);
+    }
+
+    @Override
+    public Page<Movie> findOnShowingAndSearchMovies(String name, String categoryId, Pageable pageable) {
+        return iMovieRepository.findOnShowingAndSearchMovies("%" + name + "%", "%" + categoryId + "%", pageable);
+    }
+
 }
