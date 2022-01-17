@@ -13,6 +13,16 @@ import java.util.Optional;
 public class UserServiceImpl implements IUserService {
     @Autowired
     private IUserRepository iUserRepository;
+    @Override
+    public Optional<User> findByUsername(String username) {
+        return iUserRepository.findByUsername(username);
+    }
+
+    @Override
+    public Optional<User> findByEmailContaining(String email) {
+        return iUserRepository.findByEmailContaining(email);
+    }
+
 
     @Override
     public List<User> findAll() {
