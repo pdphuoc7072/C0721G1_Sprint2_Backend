@@ -4,6 +4,8 @@ import com.codegym.model.Movie;
 import com.codegym.repository.IMovieRepository;
 import com.codegym.service.IMovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,5 +34,20 @@ public class MovieServiceImpl implements IMovieService {
     @Override
     public void remove(Long id) {
         iMovieRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Movie> getAll() {
+        return iMovieRepository.findAll();
+    }
+
+    @Override
+    public boolean existsByIdMovie(Long id) {
+        return iMovieRepository.existsById(id);
+    }
+
+    @Override
+    public Page<Movie> findAllMovie(String name, Pageable pageable) {
+        return iMovieRepository.findAllMovie( "%" + name + "%",pageable);
     }
 }
