@@ -10,6 +10,8 @@ public class BookedTicket {
 
     private String ticketCode;
 
+    private String movieName;
+
     private String dayBooked;
 
     private String dayShow;
@@ -37,6 +39,14 @@ public class BookedTicket {
 
     public void setTicketCode(String ticketCode) {
         this.ticketCode = ticketCode;
+    }
+
+    public String getMovieName() {
+        return movieName;
+    }
+
+    public void setMovieName(String movieName) {
+        this.movieName = movieName;
     }
 
     public String getDayBooked() {

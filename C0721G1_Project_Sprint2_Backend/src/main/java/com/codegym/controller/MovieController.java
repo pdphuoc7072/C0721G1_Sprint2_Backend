@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/user/")
-@CrossOrigin(origins = "http://localhost:4200",allowedHeaders = "*")
+@RequestMapping("api/")
+@CrossOrigin(origins = "https://localhost:4200",allowedHeaders = "*")
 public class MovieController {
     @Autowired
     private IMovieService iMovieService;
@@ -29,7 +29,7 @@ public class MovieController {
         return new ResponseEntity<>(movieList, HttpStatus.OK);
     }
 
-    @GetMapping("movie/{id}")
+    @GetMapping("movie/{id}/day-show")
     private ResponseEntity<?> getListDayShowByIdMovie(@PathVariable Long id) {
         Optional<Movie> movie = iMovieService.findById(id);
         if (movie.isPresent()) {
@@ -45,7 +45,7 @@ public class MovieController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("movie/{id}")
+    @GetMapping("movie/{id}/hour-show")
     private ResponseEntity<?> getListHourShowByIdMovie(@PathVariable Long id) {
         Optional<Movie> movie = iMovieService.findById(id);
         if (movie.isPresent()) {
