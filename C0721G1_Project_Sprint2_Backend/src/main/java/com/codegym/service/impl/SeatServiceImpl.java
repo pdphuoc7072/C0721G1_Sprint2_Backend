@@ -33,4 +33,9 @@ public class SeatServiceImpl implements ISeatService {
     public void remove(Long id) {
         iSeatRepository.deleteById(id);
     }
+
+    @Override
+    public List<String> findSeatByStatus() {
+        return iSeatRepository.findSeatByStatus();
+    }
 }
