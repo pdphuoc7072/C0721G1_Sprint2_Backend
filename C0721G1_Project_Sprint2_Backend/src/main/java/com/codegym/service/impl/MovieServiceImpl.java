@@ -1,6 +1,5 @@
 package com.codegym.service.impl;
 
-import com.codegym.dto.MovieStatsDTO;
 import com.codegym.model.Movie;
 import com.codegym.repository.IMovieRepository;
 import com.codegym.service.IMovieService;
@@ -34,8 +33,5 @@ public class MovieServiceImpl implements IMovieService {
     public void remove(Long id) {
         iMovieRepository.deleteById(id);
     }
-    @Override
-    public List<MovieStatsDTO> getMovieStats() {
-        return iMovieRepository.getMovieStatsTop();
-    }
+
 }

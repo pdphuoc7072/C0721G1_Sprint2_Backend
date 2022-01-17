@@ -1,6 +1,5 @@
 package com.codegym.service.impl;
 
-import com.codegym.dto.UserStatsDTO;
 import com.codegym.model.User;
 import com.codegym.repository.IUserRepository;
 import com.codegym.service.IUserService;
@@ -35,8 +34,5 @@ public class UserServiceImpl implements IUserService {
         iUserRepository.deleteById(id);
     }
 
-    @Override
-    public List<UserStatsDTO> getUserStatsList() {
-        return iUserRepository.getUserStatsTop();
-    }
+
 }
