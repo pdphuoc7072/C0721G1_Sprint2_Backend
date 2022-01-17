@@ -8,7 +8,7 @@ public class BookedTicket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long ticketCode;
+    private String ticketCode;
 
     private String dayBooked;
 
@@ -31,11 +31,11 @@ public class BookedTicket {
         this.id = id;
     }
 
-    public Long getTicketCode() {
+    public String getTicketCode() {
         return ticketCode;
     }
 
-    public void setTicketCode(Long ticketCode) {
+    public void setTicketCode(String ticketCode) {
         this.ticketCode = ticketCode;
     }
 
