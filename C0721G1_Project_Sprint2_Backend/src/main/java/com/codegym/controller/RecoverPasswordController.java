@@ -3,6 +3,7 @@ package com.codegym.controller;
 
 import com.codegym.model.User;
 import com.codegym.service.IUserService;
+import com.codegym.util.RandomPassword;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
+
+import static com.codegym.util.RandomPassword.setPassword;
+
 //Recover Password
 @RestController
 @CrossOrigin
@@ -26,37 +30,23 @@ public class RecoverPasswordController {
     private IUserService iUserService;
     @Autowired
     public JavaMailSender emailSender;
-    private static final String alpha = "abcdefghijklmnopqrstuvwxyz"; //a-z
-    private static final String digits = "0123456789"; //0-9
-    private static final String alphaUpperCase = alpha.toUpperCase(); // A-Z
-    private static final String ALPHA_NUMERIC = alpha + alphaUpperCase + digits;
-    private static final Random generator = new Random();
+
 
     @PostMapping("password/{email}")
     public ResponseEntity<?> getPassword(@PathVariable String email) {
-        Optional<User> userOptional = iUserService.findByEmailContaining(email);
+        Optional<User> userOptional = iUserService.findByEmail(email);
         if(!userOptional.isPresent()){
             return new ResponseEntity<>("EmailNotFound",HttpStatus.BAD_REQUEST);
         }
         User user = userOptional.get();
-        String randomPassword = getRandomPassword();
-        String password = setPassword(randomPassword);
+        String randomPassword = RandomPassword.getRandomPassword();
+        String password = RandomPassword.setPassword(randomPassword);
         user.setPassword(password);
         iUserService.save(user);
         sendMail(randomPassword,user.getEmail(),user.getName());
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    private static String getRandomPassword(){
-        int numberOfCharactor = 10;
-        String randomPassword = randomAlphaNumeric(numberOfCharactor);
-        return randomPassword;
-    }
-    private static String setPassword(String password){
-        String newPassword = "";
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        newPassword = bCryptPasswordEncoder.encode(password);
-        return newPassword;
-    }
+
     private void sendMail (String password, String email, String name){
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
@@ -81,17 +71,6 @@ public class RecoverPasswordController {
         return errors;
     }
 
-    private static String randomAlphaNumeric(int numberOfCharactor) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < numberOfCharactor; i++) {
-            int number = randomNumber(0, ALPHA_NUMERIC.length() - 1);
-            char ch = ALPHA_NUMERIC.charAt(number);
-            sb.append(ch);
-        }
-        return sb.toString();
-    }
-    private static int randomNumber(int min, int max) {
-        return generator.nextInt((max - min) + 1) + min;
-    }
+
 
 }

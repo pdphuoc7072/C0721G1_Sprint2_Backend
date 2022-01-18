@@ -19,8 +19,8 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Optional<User> findByEmailContaining(String email) {
-        return iUserRepository.findByEmailContaining(email);
+    public Optional<User> findByEmail(String email) {
+        return iUserRepository.findByEmail(email);
     }
 
 

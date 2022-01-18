@@ -6,6 +6,6 @@ import java.util.Optional;
 
 public interface IUserService extends IGeneralService<User> {
      Optional<User> findByUsername(String username);
-    Optional<User> findByEmailContaining(String email);
+    Optional<User> findByEmail(String email);
     void save(User user);
 }

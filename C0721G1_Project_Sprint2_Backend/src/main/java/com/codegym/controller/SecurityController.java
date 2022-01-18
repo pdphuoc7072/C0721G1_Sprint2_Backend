@@ -9,6 +9,7 @@ import com.codegym.service.IUserService;
 import com.codegym.service.impl.RoleServiceImpl;
 import com.codegym.service.impl.UserDetailsImpl;
 import com.codegym.service.impl.UserServiceImpl;
+import com.codegym.util.RandomPassword;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,21 +56,23 @@ public class SecurityController {
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         if ("FACEBOOK".equals(loginRequest.getProvider()) || "GOOGLE".equals(loginRequest.getProvider())) {
-            Optional<User> findUser = iUserService.findByEmailContaining(loginRequest.getEmail());
-            User user = new User();
-            user.setEmail(loginRequest.getEmail());
-            user.setImage(loginRequest.getPhotoUrl());
-            user.setName(loginRequest.getName());
-            Role role = roleServiceImpl.findById((long)2).get();
-            List<Role> roleList = new LinkedList<>();
-            roleList.add(role);
-            user.setRoles(roleList);
-            String[] array = loginRequest.getEmail().split("@");
-            user.setUsername(array[0]);
-            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-//            user.setPassword();
-            iUserService.save(user);
-
+            Optional<User> findUser = iUserService.findByEmail(loginRequest.getEmail());
+            if (!findUser.isPresent()) {
+                User user = new User();
+                user.setEmail(loginRequest.getEmail());
+                user.setImage(loginRequest.getPhotoUrl());
+                user.setName(loginRequest.getName());
+                List<Role> roleList = getListRole();
+                user.setRoles(roleList);
+                user.setUsername(loginRequest.getEmail());
+                loginRequest.setUsername(loginRequest.getEmail());
+                String password = RandomPassword.getRandomPassword();
+                loginRequest.setPassword(password);
+                BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+                String newPassword = bCryptPasswordEncoder.encode(password);
+                user.setPassword(newPassword);
+                iUserService.save(user);
+            }
         }
         List<String> roles1 = new ArrayList<>();
         Authentication authentication = authenticationManager.authenticate(
@@ -107,4 +110,9 @@ public class SecurityController {
         });
         return errors;
     }
+    private List<Role> getListRole (){
+       List<Role> roleList = roleServiceImpl.findByName("ROLE_USER");
+        return roleList;
+    }
+
 }
