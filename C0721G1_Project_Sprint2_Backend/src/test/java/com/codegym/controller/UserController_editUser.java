@@ -4,11 +4,13 @@ package com.codegym.controller;
 import com.codegym.dto.UserDTO;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.catalina.security.SecurityConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -17,6 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+
 public class UserController_editUser {
 
     @Autowired
@@ -44,7 +47,7 @@ public class UserController_editUser {
         userDto.setPhone("0905545434");
         userDto.setAddress("Sài Gòn");
 
-        this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/user/update")
+        this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/admin/user/update")
                         .content(this.objectMapper.writeValueAsString(userDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -70,7 +73,7 @@ public class UserController_editUser {
         userDto.setPhone("0905545434");
         userDto.setAddress("Sài Gòn");
 
-        this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/user/update")
+        this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/admin/user/update")
                         .content(this.objectMapper.writeValueAsString(userDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -97,7 +100,7 @@ public class UserController_editUser {
         userDto.setPhone("0905545434");
         userDto.setAddress("Sài Gòn");
 
-        this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/user/update")
+        this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/admin/user/update")
                         .content(this.objectMapper.writeValueAsString(userDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -123,7 +126,7 @@ public class UserController_editUser {
         userDto.setPhone("0905545434");
         userDto.setAddress("Sài Gòn");
 
-        this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/user/update")
+        this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/admin/user/update")
                         .content(this.objectMapper.writeValueAsString(userDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -149,7 +152,7 @@ public class UserController_editUser {
         userDto.setPhone("0905545434");
         userDto.setAddress("Sài Gòn");
 
-        this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/user/update")
+        this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/admin/user/update")
                         .content(this.objectMapper.writeValueAsString(userDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -166,16 +169,17 @@ public class UserController_editUser {
         userDto.setPassword("1234");
         userDto.setImage("abc.png");
         userDto.setCode("NV-001");
-        userDto.setName("Nguyễn Văn Nam");
+        userDto.setName("Nguyen Van Khoa");
         userDto.setBirthday("03/03/1991");
         userDto.setGender(1);
         userDto.setPoint(2500);
-        userDto.setIdCard("987654321");
-        userDto.setEmail("namnguyen@gmail.com");
-        userDto.setPhone("0905545434");
-        userDto.setAddress("Sài Gòn");
+        userDto.setIdCard("123456789");
+        userDto.setEmail("khoanguyen@gmail.com");
+        userDto.setPhone("0905545437");
+        userDto.setAddress("Sai Gon");
 
-        this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/user/update")
+
+        this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/admin/user/update")
                         .content(this.objectMapper.writeValueAsString(userDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
