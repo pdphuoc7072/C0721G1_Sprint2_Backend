@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/user/")
-@CrossOrigin(origins = "http://localhost:4200",allowedHeaders = "*")
+@RequestMapping("api/")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class MovieController {
     @Autowired
     private IMovieService iMovieService;
@@ -23,13 +23,13 @@ public class MovieController {
     @Autowired
     private ISeatService iSeatService;
 
-    @GetMapping("movie/list")
+    @GetMapping("user/movie/list")
     private ResponseEntity<?> getAllListMovie() {
         List<Movie> movieList = iMovieService.findAll();
         return new ResponseEntity<>(movieList, HttpStatus.OK);
     }
 
-    @GetMapping("movie/{id}")
+    @GetMapping("user/movie/{id}")
     private ResponseEntity<?> getListDayShowByIdMovie(@PathVariable Long id) {
         Optional<Movie> movie = iMovieService.findById(id);
         if (movie.isPresent()) {
@@ -59,9 +59,19 @@ public class MovieController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("seat/list")
+    @GetMapping("user/seat/list")
     private ResponseEntity<?> getListSeatByStatus() {
         List<String> listSeatByStatus = iSeatService.findSeatByStatus();
         return new ResponseEntity<>(listSeatByStatus, HttpStatus.OK);
+    }
+
+    //    duc
+    @GetMapping("movie/{id}")
+    private ResponseEntity<?> getMovieByid(@PathVariable Long id) {
+        Optional<Movie> movie = iMovieService.findById(id);
+        if (movie.isPresent()) {
+            return new ResponseEntity<>(movie.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

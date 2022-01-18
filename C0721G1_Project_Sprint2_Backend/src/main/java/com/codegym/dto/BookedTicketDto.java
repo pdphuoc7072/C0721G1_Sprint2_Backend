@@ -1,11 +1,8 @@
-package com.codegym.model;
+package com.codegym.dto;
 
-import javax.persistence.*;
 
-@Entity
-public class BookedTicket {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class BookedTicketDto {
+
     private Long id;
 
     private String ticketCode;
@@ -22,8 +19,15 @@ public class BookedTicket {
     private String seatBooked;
 
     private Integer totalMoney;
+    public BookedTicketDto() {
+    }
 
-    public BookedTicket() {
+    public String getNameUser() {
+        return nameUser;
+    }
+
+    public void setNameUser(String nameUser) {
+        this.nameUser = nameUser;
     }
 
     public String getCodeUser() {
@@ -34,13 +38,7 @@ public class BookedTicket {
         this.codeUser = codeUser;
     }
 
-    public String getNameUser() {
-        return nameUser;
-    }
 
-    public void setNameUser(String nameUser) {
-        this.nameUser = nameUser;
-    }
 
     public Long getId() {
         return id;
