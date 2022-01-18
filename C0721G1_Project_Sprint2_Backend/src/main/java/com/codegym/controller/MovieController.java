@@ -44,18 +44,28 @@ public class MovieController {
     }
 
 
+//    @GetMapping("")
+//    public ResponseEntity<?> findAllMovie(@RequestParam(name = "name", required = false) String name,
+//                                          @PageableDefault() Pageable pageable) {
+//        Page<Movie> moviePage = iMovieService.findAllMovie(name, pageable);
+//        if (moviePage.isEmpty()) {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//        return new ResponseEntity<>(moviePage, HttpStatus.OK);
+//    }
+
+
     @GetMapping("")
-    public ResponseEntity<?> findAllMovie(@RequestParam(name = "name", required = false) String name,
-                                          @PageableDefault() Pageable pageable
-//                                          @RequestParam int page,
-//                                          @RequestParam int size
-    )
-    {
-//        Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, "name");
+    public ResponseEntity<?> findAllMovie(@RequestParam String name,
+                                          @RequestParam int page ,
+                                          @RequestParam int size ) {
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, "name");
         Page<Movie> moviePage = iMovieService.findAllMovie(name, pageable);
         if (moviePage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(moviePage, HttpStatus.OK);
     }
+
+
 }
