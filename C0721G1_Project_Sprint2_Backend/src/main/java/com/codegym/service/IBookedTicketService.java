@@ -6,5 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 
 public interface IBookedTicketService {
-    Page<BookedTicket> findTicketsUser(long id, Pageable pageable);
+    Page<BookedTicket> findTicketsUser(String id, Pageable pageable);
+
 }

@@ -1,28 +1,47 @@
 package com.codegym.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 public class UserCreateDTO {
 
-
+    @NotBlank
+    @Size(max = 30, min = 6 ,message = "Tên tài khoản phải từ 6 đến 30 kí tự")
+    @Pattern(regexp = "[\\w0-9]*",message = "Tên tài khoản có chứa kí tự số hoặc kí tự đặc biệt")
     private String username;
-
+    @NotBlank
     private String password;
 
     private String image;
 
     private String code;
 
+
+    @NotBlank
+    @Size(max = 30, min = 2,message = "Họ và tên phải từ 2 đến 30 kí tự")
+    @Pattern(regexp = "(\\p{L}+[\\p{L}\\s]*)", message = "Tên có chứa kí tự số hoặc kí tự đặc biệt")
     private String name;
 
+
+    @NotBlank
     private String birthday;
 
     private Integer gender;
-
+    @NotBlank
     private String idCard;
 
+
+    @NotBlank
+    @Pattern(regexp = "[a-z]+[a-zA-Z0-9]+@[a-zA-Z0-9]+(\\.[a-zA-Z0-9]+\\.*[a-zA-Z0-9]*)",message = "Email không đúng định dạng")
     private String email;
 
-    private String phone;
 
+    @NotBlank
+    @Pattern(regexp = "^((090)|(091))[\\d]{7}$",
+            message = "Số điện thoại phải bắt đầu bằng 090xxxxxxx or 091xxxxxxx")
+    private String phone;
+    @NotBlank
     private String address;
 
     public UserCreateDTO() {

@@ -2,6 +2,7 @@ package com.codegym.controller;
 
 import com.codegym.model.BookedTicket;
 import com.codegym.service.IBookedTicketService;
+import com.codegym.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,10 +17,17 @@ import org.springframework.web.bind.annotation.*;
 public class TicketController {
     @Autowired
     IBookedTicketService bookedTicketService;
+    @Autowired
+    IUserService userService;
 
     @GetMapping("/listticket")
-    public ResponseEntity<Page<BookedTicket>> findAllEmployee(@RequestParam long id,
+    public ResponseEntity<Page<BookedTicket>> findAllTicketUser(@RequestParam String id,
                                                               @RequestParam int page){
+        if(id == null || id == ""){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }else if(!userService.existsById(Integer.parseInt(id))){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         Pageable pageable = PageRequest.of(page, 1);
         Page<BookedTicket> bookedTicketPage = bookedTicketService.findTicketsUser(id, pageable);
         if(bookedTicketPage.isEmpty()){

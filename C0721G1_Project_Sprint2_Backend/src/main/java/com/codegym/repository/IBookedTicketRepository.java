@@ -9,5 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface IBookedTicketRepository extends JpaRepository<BookedTicket, Long> {
     @Query(value = "SELECT * FROM booked_ticket WHERE ticket_code IN (SELECT `code` FROM ticket WHERE user_id = :id)", nativeQuery = true)
-    Page<BookedTicket> findTicketsUser(@Param("id") long id, Pageable pageable);
+    Page<BookedTicket> findTicketsUser(@Param("id") String id, Pageable pageable);
+
+
 }

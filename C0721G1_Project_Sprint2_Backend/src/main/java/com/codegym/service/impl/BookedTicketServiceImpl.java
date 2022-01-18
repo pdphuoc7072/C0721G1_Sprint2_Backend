@@ -13,7 +13,7 @@ public class BookedTicketServiceImpl implements IBookedTicketService {
     @Autowired
     IBookedTicketRepository bookedTicketRepository;
     @Override
-    public Page<BookedTicket> findTicketsUser(long id, Pageable pageable) {
+    public Page<BookedTicket> findTicketsUser(String id, Pageable pageable) {
         return bookedTicketRepository.findTicketsUser(id, pageable);
     }
 }
