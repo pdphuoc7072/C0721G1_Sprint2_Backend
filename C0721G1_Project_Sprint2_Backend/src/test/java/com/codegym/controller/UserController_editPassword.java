@@ -112,7 +112,7 @@ public class UserController_editPassword {
         UserDto userDto = new UserDto();
 
         userDto.setId(1l);
-        userDto.setPassword("tinh123");
+        userDto.setPassword("binhCode@Gym");
         userDto.setUserName("admin");
 
         this.mockMvc
