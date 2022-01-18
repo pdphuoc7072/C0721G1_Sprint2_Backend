@@ -7,6 +7,7 @@ import org.springframework.validation.Validator;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -26,7 +27,9 @@ public class UserDTO implements Validator {
 
     private String code;
 
-    @NotBlank(message = "Trường này không được để trống!")
+    @NotBlank
+    @Size(max = 30, min = 2)
+    @Pattern(regexp = "(\\p{L}+[\\p{L}\\s]*)", message = "Tên có chứa kí tự số hoặc kí tự đặc biệt")
     private String name;
 
     @NotBlank(message = "Trường này không được để trống!")
@@ -42,6 +45,10 @@ public class UserDTO implements Validator {
     @NotBlank(message = "Trường này không được để trống!")
     private String idCard;
 
+
+    @NotBlank(message = "Trường này không được để trống!")
+    @Pattern(regexp = "^(?:^|\\s)[\\w!#$%&'*+/=?^`{|}~-](\\.?[\\w!#$%&'*+/=?^`{|}~-]+)*@\\w+[.-]?\\w*\\.[a-zA-Z]{2,3}\\b$",
+            message = "Email phải đúng định dạng")
     private String email;
 
     @NotBlank(message = "Trường này không được để trống!")

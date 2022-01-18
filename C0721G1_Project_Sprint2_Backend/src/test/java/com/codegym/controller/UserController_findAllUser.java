@@ -20,56 +20,89 @@ public class UserController_findAllUser {
     @Autowired
     private UserController userController;
 
+
+    //    idType = null
     @Test
-    public void findAllUser_5() throws ParseException {
+    public void findAllUser_7() throws ParseException {
         ResponseEntity<Page<User>> responseEntity
-                = (ResponseEntity<Page<User>>) this.userController.findAllUser("","","", 3,2);
+                = (ResponseEntity<Page<User>>) this.userController.findAllUser(null, null, null, 3, 2);
+        Assertions.assertEquals(400, responseEntity.getStatusCodeValue());
+    }
+
+
+    //    idType = rong
+    @Test
+    public void findAllUser_8() throws ParseException {
+        ResponseEntity<Page<User>> responseEntity
+                = (ResponseEntity<Page<User>>) this.userController.findAllUser("", "", "", 3, 2);
+        Assertions.assertEquals(400, responseEntity.getStatusCodeValue());
+    }
+
+
+    //        idType khong ton tai trong DB
+    @Test
+    public void findAllUser_9_1() throws ParseException {
+        ResponseEntity<Page<User>> responseEntity
+                = (ResponseEntity<Page<User>>) this.userController.findAllUser("", "H", "", 3, 2);
         Assertions.assertEquals(400, responseEntity.getStatusCodeValue());
     }
 
     @Test
-    public void findAllUser_6() throws ParseException {
+    public void findAllUser_9_2() throws ParseException {
         ResponseEntity<Page<User>> responseEntity
-                = (ResponseEntity<Page<User>>) this.userController.findAllUser("","","", 0,2);
-        Assertions.assertEquals(200, responseEntity.getStatusCodeValue());
-        Assertions.assertEquals(2, Objects.requireNonNull(responseEntity.getBody()).getTotalPages());
-        Assertions.assertEquals("Huy", responseEntity.getBody().getContent().get(1).getName());
-    }
-    @Test
-    public void findAllUser_6_1() throws ParseException {
-        ResponseEntity<Page<User>> responseEntity
-                = (ResponseEntity<Page<User>>) this.userController.findAllUser("","H","", 0,2);
-        Assertions.assertEquals(200, responseEntity.getStatusCodeValue());
-        Assertions.assertEquals("Hoa", responseEntity.getBody().getContent().get(0).getName());
-    }
-
-    @Test
-    public void findAllUser_6_2() throws ParseException {
-        ResponseEntity<Page<User>> responseEntity
-                = (ResponseEntity<Page<User>>) this.userController.findAllUser("02","","", 0,2);
-        Assertions.assertEquals(200, responseEntity.getStatusCodeValue());
-        Assertions.assertEquals("Huy", responseEntity.getBody().getContent().get(0).getName());
-    }
-
-    @Test
-    public void findAllUser_6_3() throws ParseException {
-        ResponseEntity<Page<User>> responseEntity
-                = (ResponseEntity<Page<User>>) this.userController.findAllUser("","","0905465856", 0,2);
-        Assertions.assertEquals(200, responseEntity.getStatusCodeValue());
-        Assertions.assertEquals("Hoa", responseEntity.getBody().getContent().get(0).getName());
-    }
-
-    @Test
-    public void findAllUser_5_1() throws ParseException {
-        ResponseEntity<Page<User>> responseEntity
-                = (ResponseEntity<Page<User>>) this.userController.findAllUser("fnfhre","","", 3,2);
+                = (ResponseEntity<Page<User>>) this.userController.findAllUser("02", "", "", 3, 2);
         Assertions.assertEquals(400, responseEntity.getStatusCodeValue());
     }
 
     @Test
-    public void findAllUser_5_2() throws ParseException {
+    public void findAllUser_9_3() throws ParseException {
         ResponseEntity<Page<User>> responseEntity
-                = (ResponseEntity<Page<User>>) this.userController.findAllUser("","fndfn","", 3,2);
+                = (ResponseEntity<Page<User>>) this.userController.findAllUser("", "", "0905465856", 3, 2);
         Assertions.assertEquals(400, responseEntity.getStatusCodeValue());
+    }
+
+
+    @Test
+    public void findAllUser_9_4() throws ParseException {
+        ResponseEntity<Page<User>> responseEntity
+                = (ResponseEntity<Page<User>>) this.userController.findAllUser("02", "H", "0905465856", 3, 2);
+        Assertions.assertEquals(400, responseEntity.getStatusCodeValue());
+    }
+
+
+    //        idType ton tai trong DB
+//            case tra ve list co size > 0
+
+    @Test
+    public void findAllUser_11_1() throws ParseException {
+        ResponseEntity<Page<User>> responseEntity
+                = (ResponseEntity<Page<User>>) this.userController.findAllUser("NV-001", "", "", 0, 2);
+        Assertions.assertEquals(200, responseEntity.getStatusCodeValue());
+        Assertions.assertEquals("Nguyễn Văn Nam", responseEntity.getBody().getContent().get(0).getName());
+    }
+
+
+    @Test
+    public void findAllUser_11_2() throws ParseException {
+        ResponseEntity<Page<User>> responseEntity
+                = (ResponseEntity<Page<User>>) this.userController.findAllUser("", "Nguyễn Văn Nam", "", 0, 2);
+        Assertions.assertEquals(200, responseEntity.getStatusCodeValue());
+        Assertions.assertEquals("NV-001", responseEntity.getBody().getContent().get(0).getCode());
+    }
+
+    @Test
+    public void findAllUser_11_3() throws ParseException {
+        ResponseEntity<Page<User>> responseEntity
+                = (ResponseEntity<Page<User>>) this.userController.findAllUser("", "", "0905545434", 0, 2);
+        Assertions.assertEquals(200, responseEntity.getStatusCodeValue());
+        Assertions.assertEquals("Nguyễn Văn Nam", responseEntity.getBody().getContent().get(0).getName());
+    }
+
+    @Test
+    public void findAllUser_11_4() throws ParseException {
+        ResponseEntity<Page<User>> responseEntity
+                = (ResponseEntity<Page<User>>) this.userController.findAllUser("NV-001", "Nguyễn Văn Nam", "0905545434", 0, 2);
+        Assertions.assertEquals(200, responseEntity.getStatusCodeValue());
+
     }
 }
