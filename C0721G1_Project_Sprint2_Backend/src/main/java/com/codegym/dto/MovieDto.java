@@ -8,30 +8,58 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public class MovieDto implements Validator {
     private Long id;
+    @NotBlank(message = "Trường này không được để trống!")
     private String image;
+    @NotBlank(message = "Trường này không được để trống!")
     private String name;
+    @NotBlank(message = "Trường này không được để trống!")
     @Pattern(regexp = "\\d{4}[-]((([0]{1})([1-9]{1}))|(([1]{1})([0-2]{1})))[-]((([0]{1})([1-9]{1}))|(([1-2]{1})([0-9]{1}))|(([3]{1})([0-1]{1})))",
             message = "Please enter the correct format for start date 'DD/MM/YYYY'")
     private String startDate;
+    @NotBlank(message = "Trường này không được để trống!")
     @Pattern(regexp = "\\d{4}[-]((([0]{1})([1-9]{1}))|(([1]{1})([0-2]{1})))[-]((([0]{1})([1-9]{1}))|(([1-2]{1})([0-9]{1}))|(([3]{1})([0-1]{1})))",
             message = "Please enter the correct format for end date 'DD/MM/YYYY'")
     private String endDate;
+    @NotBlank
+    @NotBlank(message = "Trường này không được để trống!")
     private String actor;
+    @NotBlank
+    @NotBlank(message = "Trường này không được để trống!")
     private String studio;
+    @NotBlank
+    @NotBlank(message = "Trường này không được để trống!")
+    @Max(value = 250)
     private String duration;
+    @NotBlank
+    @NotBlank(message = "Trường này không được để trống!")
     private String director;
+    @NotBlank
+    @NotBlank(message = "Trường này không được để trống!")
     private String version;
     @Column(columnDefinition = "TEXT")
+    @NotBlank
+    @NotBlank(message = "Trường này không được để trống!")
+    @Size(max = 500, min = 10)
     private String content;
+    @NotBlank
+    @NotBlank(message = "Trường này không được để trống!")
     private String trailer;
+    @NotBlank
+    @NotBlank(message = "Trường này không được để trống!")
     private String hall;
     private List<Category> categories;
-    private List<Schedule> schedules;
     private List<Movie> movieList;
 
     public MovieDto() {
@@ -149,14 +177,6 @@ public class MovieDto implements Validator {
         this.categories = categories;
     }
 
-    public List<Schedule> getSchedules() {
-        return schedules;
-    }
-
-    public void setSchedules(List<Schedule> schedules) {
-        this.schedules = schedules;
-    }
-
     public List<Movie> getMovieList() {
         return movieList;
     }
@@ -172,6 +192,26 @@ public class MovieDto implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
+        MovieDto movieDto = (MovieDto) target;
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date startDate = sdf.parse(movieDto.startDate);
+            Date endDate = sdf.parse(movieDto.endDate);
+            Date now = sdf.parse(String.valueOf(LocalDate.now()));
+            if (startDate.compareTo(now) <= 0) {
+                errors.rejectValue("startDate", "SDF", "Ngày bắt đầu phải trước ngày hiện tại!");
+            }
+            if (endDate.compareTo(now) <= 0) {
+                errors.rejectValue("endDate", "EDF", "Ngày kết thúc phải sau ngày hiện tại!");
+            }
+            if (endDate.compareTo(startDate) <= 0) {
+                errors.rejectValue("startDate", "SDM", "Ngày bắt đầu phải trước ngày kết thúc!");
+                errors.rejectValue("endDate", "EDM", "Ngày kết thúc phải sau ngày bắt đầu !");
+
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -35,34 +35,35 @@ public class MovieController {
 
 
     @PostMapping("movie/create")
-    public ResponseEntity<?> createMovie(@RequestBody Movie movie) {
+    public ResponseEntity<?> createMovie(@Valid @RequestBody MovieDto movieDto, BindingResult bindingResult) {
 //        BeanUtils.copyProperties(movie, movieDto);
-        try {
+//        try {
+//            iMovieService.save(movie);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//        return new ResponseEntity<>(HttpStatus.OK);
+//        List<Movie> movieList = iMovieService.findAll();
+//        movieDto.setMovieList(movieList);
+        movieDto.validate(movieDto, bindingResult);
+        if (bindingResult.hasFieldErrors()) {
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+        } else {
+            Movie movie = new Movie();
+            BeanUtils.copyProperties(movieDto, movie);
             iMovieService.save(movie);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PatchMapping("movie/edit/{id}")
+    @PatchMapping("movie/edit")
     public ResponseEntity<HttpStatus> editSupplies(@Valid @RequestBody MovieDto movieDto, BindingResult bindingResult1) {
-        List<Movie> movieList = iMovieService.findAll();
-        movieDto.setMovieList(movieList);
         movieDto.validate(movieDto, bindingResult1);
         if (bindingResult1.hasFieldErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
             Movie movie = new Movie();
-            String name = movieDto.getName().trim();
-            String content = movieDto.getContent().trim();
-            String director = movieDto.getDirector().trim();
-            String actor = movieDto.getActor().trim();
-            movieDto.setName(name);
-            movieDto.setContent(content);
-            movieDto.setDirector(director);
-            movieDto.setActor(actor);
             BeanUtils.copyProperties(movieDto, movie);
             movie.setId(movieDto.getId());
             iMovieService.save(movie);
