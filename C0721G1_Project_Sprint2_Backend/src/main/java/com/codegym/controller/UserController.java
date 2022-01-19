@@ -50,6 +50,10 @@ public class UserController {
         if (userCurrent.isPresent()) {
 //            if (passwordEncoder.matches(oldPassword, userCurrent.get().getPassword())) {
 //                userCurrent.get().setPassword(passwordEncoder.encode(newPassWord));
+                if(oldPassword.equals(newPassWord)) {
+                    userCurrent.get().setPassword(newPassWord);
+                }
+
             iUserService.updateUser(userCurrent.get());
             return new ResponseEntity<>(HttpStatus.OK);
         } else {

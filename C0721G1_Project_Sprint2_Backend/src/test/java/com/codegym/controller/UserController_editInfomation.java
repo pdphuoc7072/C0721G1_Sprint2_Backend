@@ -53,6 +53,7 @@ public class UserController_editInfomation {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
+    //[item] = null
     @Test
     public void editUser_phone_13() throws Exception {
         UserDto userDto = new UserDto();
@@ -87,7 +88,7 @@ public class UserController_editInfomation {
     }
 
     @Test
-    public void  editUser_name_14() throws Exception {
+    public void  editUser_Name_14() throws Exception {
         UserDto userDto = new UserDto();
         userDto.setId((long) 1);
         userDto.setName("");
@@ -102,6 +103,7 @@ public class UserController_editInfomation {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
+    //[item] = rỗng
     @Test
     public void editUser_birthDay_14() throws Exception {
         UserDto userDto = new UserDto();
@@ -135,7 +137,7 @@ public class UserController_editInfomation {
                 .andExpect(status().is4xxClientError());
     }
     @Test
-    public void editUser_address_14() throws Exception {
+    public void editUser_Address_14() throws Exception {
         UserDto userDto = new UserDto();
         userDto.setId((long) 1);
         userDto.setName("Nguyễn văn a");
@@ -150,8 +152,9 @@ public class UserController_editInfomation {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
+    //[item] sai format
     @Test
-    public void  editUser_name_15() throws Exception {
+    public void  editUser_Name_15() throws Exception {
         UserDto userDto = new UserDto();
         userDto.setId((long) 1);
         userDto.setName("Nguyen van 123");
@@ -166,8 +169,9 @@ public class UserController_editInfomation {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
+    //[item] không đủ điều kiện
     @Test
-    public void editUser_birthDay_15() throws Exception {
+    public void editUser_BirthDay_15() throws Exception {
         UserDto userDto = new UserDto();
         userDto.setId((long) 1);
         userDto.setName("Nguyễn văn a");
@@ -176,23 +180,23 @@ public class UserController_editInfomation {
         userDto.setGender(0);
         userDto.setAddress("Huế");
         userDto.setImage("anh1.png");
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/api/admin/user/create")
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/api/user/update/{id}")
                 .content(this.objectMapper.writeValueAsString(userDto))
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
     @Test
-    public void editUser_phone_15() throws Exception {
+    public void editUser_Phone_15() throws Exception {
         UserDto userDto = new UserDto();
         userDto.setId((long) 1);
         userDto.setName("Nguyễn văn a");
-        userDto.setPhone("0985666777");
+        userDto.setPhone("098566677799");
         userDto.setBirthday("2000-01-01");
         userDto.setGender(0);
         userDto.setAddress("Huế");
         userDto.setImage("anh1.png");
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/api/admin/user/create")
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/api/user/update/{id}")
                 .content(this.objectMapper.writeValueAsString(userDto))
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -200,7 +204,7 @@ public class UserController_editInfomation {
     }
 
     @Test
-    public void  editUser_name_16() throws Exception {
+    public void  editUser_Name_16() throws Exception {
         UserDto userDto = new UserDto();
         userDto.setId((long) 1);
         userDto.setName("a");
@@ -235,7 +239,7 @@ public class UserController_editInfomation {
     public void  editUser_name_18() throws Exception {
         UserDto userDto = new UserDto();
         userDto.setId((long) 1);
-        userDto.setName("Nguyen van Ab");
+        userDto.setName("Nguyen Van An");
         userDto.setPhone("0909999999");
         userDto.setBirthday("2000-10-16");
         userDto.setGender(0);
