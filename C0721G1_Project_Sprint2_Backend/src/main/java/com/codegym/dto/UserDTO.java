@@ -42,7 +42,7 @@ public class UserDTO implements Validator {
 
     private Integer point;
 
-    @NotBlank(message = "Trường này không được để trống!")
+
     private String idCard;
 
 
@@ -54,6 +54,8 @@ public class UserDTO implements Validator {
     @NotBlank(message = "Trường này không được để trống!")
     private String phone;
 
+
+    @NotBlank(message = "Trường này không được để trống!")
     private String address;
 
     List<User> userList = new ArrayList<>();

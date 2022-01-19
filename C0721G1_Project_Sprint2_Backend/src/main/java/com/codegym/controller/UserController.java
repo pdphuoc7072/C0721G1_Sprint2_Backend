@@ -47,10 +47,13 @@ public class UserController {
     }
 
 
+
+
+
     private String getCode() {
         String code = "NV-";
         List<Integer> codeList = new ArrayList<>();
-        List<User> userList = (List<User>) iUserService.findAll();
+        List<User> userList = iUserService.findAll();
         if (userList.isEmpty()) {
             return ("NV-001");
         } else {
