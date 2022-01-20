@@ -4,10 +4,7 @@ import com.codegym.model.*;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -37,7 +34,8 @@ public class UserDTO implements Validator {
             message = "Phải đúng định dạng: mm-dd-yyyy!")
     private String birthday;
 
-    @NotBlank(message = "Trường này không được để trống!")
+
+    @NotNull
     private Integer gender;
 
     private Integer point;
