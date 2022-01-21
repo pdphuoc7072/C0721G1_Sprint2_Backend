@@ -24,14 +24,14 @@ public class UserDTO implements Validator {
 
     private String code;
 
-    @NotBlank
+    @NotBlank(message = "Trường này không được để trống!")
     @Size(max = 30, min = 2)
     @Pattern(regexp = "(\\p{L}+[\\p{L}\\s]*)", message = "Tên có chứa kí tự số hoặc kí tự đặc biệt")
     private String name;
 
     @NotBlank(message = "Trường này không được để trống!")
-    @Pattern(regexp = "^(?:0[1-9]|1[012])[-/.](?:0[1-9]|[12][0-9]|3[01])[-/.](?:19\\d{2}|20\\d{2})$",
-            message = "Phải đúng định dạng: mm-dd-yyyy!")
+//    @Pattern(regexp = "^(?:0[1-9]|1[012])[-/.](?:0[1-9]|[12][0-9]|3[01])[-/.](?:19\\d{2}|20\\d{2})$",
+//            message = "Phải đúng định dạng: mm-dd-yyyy!")
     private String birthday;
 
 
@@ -45,8 +45,8 @@ public class UserDTO implements Validator {
 
 
     @NotBlank(message = "Trường này không được để trống!")
-    @Pattern(regexp = "^(?:^|\\s)[\\w!#$%&'*+/=?^`{|}~-](\\.?[\\w!#$%&'*+/=?^`{|}~-]+)*@\\w+[.-]?\\w*\\.[a-zA-Z]{2,3}\\b$",
-            message = "Email phải đúng định dạng")
+//    @Pattern(regexp = "^(?:^|\\s)[\\w!#$%&'*+/=?^`{|}~-](\\.?[\\w!#$%&'*+/=?^`{|}~-]+)*@\\w+[.-]?\\w*\\.[a-zA-Z]{2,3}\\b$",
+//            message = "Email phải đúng định dạng")
     private String email;
 
     @NotBlank(message = "Trường này không được để trống!")

@@ -46,10 +46,6 @@ public class UserController {
         return new ResponseEntity<>(userPage, HttpStatus.OK);
     }
 
-
-
-
-
     private String getCode() {
         String code = "NV-";
         List<Integer> codeList = new ArrayList<>();
@@ -127,14 +123,19 @@ public class UserController {
 
     @GetMapping("/admin/user/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
-        try {
-            User user = iUserService.findById(id).get();
-            UserDTO userDto = new UserDTO();
-            BeanUtils.copyProperties(user, userDto);
-            return new ResponseEntity<>(userDto, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        try {
+//            User user = iUserService.findById(id).get();
+//            UserDTO userDto = new UserDTO();
+//            BeanUtils.copyProperties(user, userDto);
+//            return new ResponseEntity<>(userDto, HttpStatus.OK);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+        Optional<User> user = iUserService.findById(id);
+        if (user.isPresent()) {
+            return new ResponseEntity<>(user.get(), HttpStatus.OK);
         }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
 
