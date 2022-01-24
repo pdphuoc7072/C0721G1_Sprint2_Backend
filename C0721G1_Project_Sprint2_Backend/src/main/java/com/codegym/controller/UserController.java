@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.text.ParseException;
-import java.time.LocalDate;
 import java.util.*;
 
 @RestController
@@ -123,14 +122,6 @@ public class UserController {
 
     @GetMapping("/admin/user/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
-//        try {
-//            User user = iUserService.findById(id).get();
-//            UserDTO userDto = new UserDTO();
-//            BeanUtils.copyProperties(user, userDto);
-//            return new ResponseEntity<>(userDto, HttpStatus.OK);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
         Optional<User> user = iUserService.findById(id);
         if (user.isPresent()) {
             return new ResponseEntity<>(user.get(), HttpStatus.OK);

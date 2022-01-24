@@ -3,13 +3,8 @@ package com.codegym.dto;
 import com.codegym.model.*;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-
 import javax.validation.constraints.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class UserDTO implements Validator {

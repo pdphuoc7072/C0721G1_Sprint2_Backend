@@ -8,9 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IUserService extends IGeneralService<User>{
-//    Optional<User> findByUserId(Long id);
-    Optional<User> findByCode(String code);
 
+    Optional<User> findByCode(String code);
     Page<User> findAllUser(String code, String name, String phone, Pageable pageable);
     boolean existsByIdUser(Long id);
     List<User> getAll();
